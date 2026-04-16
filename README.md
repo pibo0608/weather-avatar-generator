@@ -40,12 +40,12 @@ weather-avatar-generator/
  ├── README.md # 项目说明 
  ├── LICENSE # MIT 开源协议 
  └── assets/  
-               └── preview.png # 预览图（可选）
+       └── preview.png # 预览图（可选）
  ---
 
 ## 🤝 Credits | 致谢
 
-**构想者 | Conceptor**: [Your Name]
+**构想者 | Conceptor**: pibo
 
 **开发协助 | Development**: AI Assistant
 
@@ -59,6 +59,6 @@ weather-avatar-generator/
 
 ## 📄 License | 开源协议
 
-[MIT License](LICENSE) © 2024 Weather Avatar Generator
+[MIT License](LICENSE) © 2026 Weather Avatar Generator
 
 免费用于个人和商业用途 | Free for personal and commercial use.
