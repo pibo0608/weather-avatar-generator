@@ -602,6 +602,44 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+
+        /* ==================== 下载计数器样式 ==================== */
+        .download-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .counter-number {
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Orbitron', monospace;
+            min-width: 60px;
+            text-align: center;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .download-counter {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body lang="zh">
@@ -801,7 +839,45 @@
         </div>
     </div>
 
+    <!-- ==================== 下载计数器显示 ==================== -->
+    <div class="download-counter">
+        📥 <span data-lang="zh">总下载次数</span><span data-lang="en">Total Downloads</span>
+        <span class="counter-number" id="counterNumber">0</span>
+    </div>
+
     <script>
+        // ==================== 下载计数器配置 ====================
+        const COUNTER_API = 'https://avatar-counter.3466211450.workers.dev';
+
+        // 获取计数
+        async function getDownloadCount() {
+            try {
+                const response = await fetch(`${COUNTER_API}/count`);
+                const data = await response.json();
+                document.getElementById('counterNumber').textContent = data.count.toLocaleString();
+            } catch (e) {
+                console.log('Counter not available:', e);
+            }
+        }
+
+        // 增加计数
+        async function incrementDownloadCount() {
+            try {
+                const response = await fetch(`${COUNTER_API}/increment`, { method: 'POST' });
+                const data = await response.json();
+                document.getElementById('counterNumber').textContent = data.count.toLocaleString();
+                
+                // 动画效果
+                const counter = document.querySelector('.download-counter');
+                if (counter) {
+                    counter.style.transform = 'scale(1.1)';
+                    setTimeout(() => counter.style.transform = 'scale(1)', 200);
+                }
+            } catch (e) {
+                console.log('Counter increment failed:', e);
+            }
+        }
+
         // 字体配置
         const zhFonts = [
             { id: 'noto-sans', name: '思源黑体', family: 'Noto Sans SC', size: '90px', weight: '700' },
@@ -889,6 +965,27 @@
             
             // 更新预览
             updatePreviewStyle();
+            
+            // 更新计数器文字
+            updateCounterLanguage();
+        }
+        
+        // 更新计数器语言
+        function updateCounterLanguage() {
+            const counterText = document.querySelector('.download-counter');
+            if (counterText) {
+                const zhSpan = counterText.querySelector('[data-lang="zh"]');
+                const enSpan = counterText.querySelector('[data-lang="en"]');
+                if (zhSpan && enSpan) {
+                    if (currentLang === 'zh') {
+                        zhSpan.style.display = 'inline';
+                        enSpan.style.display = 'none';
+                    } else {
+                        zhSpan.style.display = 'none';
+                        enSpan.style.display = 'inline';
+                    }
+                }
+            }
         }
 
         function init() {
@@ -896,6 +993,9 @@
             updateSVBackground();
             setupEventListeners();
             updatePreviewStyle();
+            // ==================== 初始化计数器 ====================
+            getDownloadCount();
+            updateCounterLanguage();
         }
 
         function initFontButtons() {
@@ -1236,7 +1336,7 @@
             });
         }
 
-        function downloadAvatar() {
+        async function downloadAvatar() {
             const canvas = document.createElement('canvas');
             canvas.width = 400;
             canvas.height = 400;
@@ -1297,6 +1397,10 @@
             const link = document.createElement('a');
             link.download = `${prefix}-${currentStyle}-${weatherName}-${Date.now()}.png`;
             link.href = canvas.toDataURL();
+            
+            // ==================== 增加下载计数 ====================
+            await incrementDownloadCount();
+            
             link.click();
         }
 
