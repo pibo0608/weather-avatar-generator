@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Avatar Generator | 天气头像生成器</title>
+    
+    <!-- 中文字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@chinese-fonts/ysbth@latest/dist/优设标题黑/result.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@chinese-fonts/dyh@latest/dist/SmileySans-Oblique/result.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@chinese-fonts/dymh@latest/dist/DouyinSansBold/result.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@chinese-fonts/jnmyt@latest/dist/荆南麦圆体/result.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/alibaba-puhuiti-2/Alibaba-PuHuiTi-Regular/Alibaba-PuHuiTi-Regular.css" rel="stylesheet">
+    
+    <!-- 英文字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alfa+Slab+One&family=Archivo+Black&family=Bebas+Neue&family=Bungee&family=Bungee+Shade&family=Cinzel&family=Comfortaa:wght@700&family=Fredoka+One&family=Kanit:wght@800&family=Lobster&family=Monoton&family=Montserrat+Subrayada&family=Orbitron:wght@900&family=Permanent+Marker&family=Press+Start+2P&family=Righteous&family=Russo+One&family=Rye&family=Shrikhand&family=Special+Elite&family=Staatliches&family=Teko:wght@600&family=Black+Ops+One&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        body[lang="en"] {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 26px;
+        }
+
+        body[lang="zh"] h1 {
+            font-family: '优设标题黑', 'Noto Sans SC', sans-serif;
+        }
+
+        body[lang="en"] h1 {
+            font-family: 'Righteous', cursive;
+        }
+
+        /* 语言切换按钮 */
+        .lang-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* 隐藏非当前语言的元素 */
+        [data-lang] {
+            display: none;
+        }
+
+        body[lang="zh"] [data-lang="zh"] {
+            display: block;
+        }
+
+        body[lang="en"] [data-lang="en"] {
+            display: block;
+        }
+
+        body[lang="zh"] [data-lang="zh"].inline,
+        body[lang="en"] [data-lang="en"].inline {
+            display: inline;
+        }
+
+        /* 天气区域 */
+        .weather-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .weather-main {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .weather-icon {
+            font-size: 50px;
+        }
+
+        .weather-info h3 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .weather-info .temp {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .weather-info .desc {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .weather-details {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .weather-detail {
+            text-align: center;
+        }
+
+        .weather-detail .label {
+            opacity: 0.7;
+            font-size: 12px;
+        }
+
+        .weather-detail .value {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .location-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .location-input input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            width: 150px;
+            outline: none;
+        }
+
+        .location-input button {
+            padding: 10px 15px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .location-input button:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .weather-themes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .weather-theme-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid transparent;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .weather-theme-btn:hover, .weather-theme-btn.active {
+            background: white;
+            color: var(--primary);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 700px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .weather-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .weather-main {
+                flex-direction: column;
+            }
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .preview-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .preview {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 90px;
+            font-weight: normal;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .preview.sunny::before {
+            opacity: 1;
+            background: radial-gradient(circle at 30% 30%, rgba(255,200,0,0.3) 0%, transparent 50%);
+        }
+
+        .preview.cloudy::before {
+            opacity: 1;
+            background: linear-gradient(180deg, rgba(200,200,200,0.3) 0%, transparent 100%);
+        }
+
+        .preview.rainy::before {
+            opacity: 1;
+            background: repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(100,150,255,0.1) 3px, rgba(100,150,255,0.1) 6px);
+            animation: rain 0.5s linear infinite;
+        }
+
+        .preview.snowy::before {
+            opacity: 1;
+            background: radial-gradient(circle at 20% 30%, white 2px, transparent 2px), radial-gradient(circle at 60% 70%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 2px, transparent 2px);
+            animation: snow 3s linear infinite;
+        }
+
+        .preview.thunder::before {
+            opacity: 1;
+            background: rgba(255,255,0,0.1);
+            animation: thunder 2s infinite;
+        }
+
+        @keyframes rain {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-6px); }
+        }
+
+        @keyframes snow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        @keyframes thunder {
+            0%, 90%, 100% { opacity: 0; }
+            92%, 96% { opacity: 1; }
+            94% { opacity: 0.3; }
+        }
+
+        .style-realistic {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .style-flat {
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .style-glass {
+            background: rgba(102, 126, 234, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.4);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3), inset 0 0 30px rgba(255,255,255,0.2);
+        }
+
+        .style-glass .letter {
+            color: var(--glass-color, var(--primary));
+            text-shadow: 0 0 30px var(--glass-color, var(--primary));
+        }
+
+        .letter {
+            line-height: 1;
+            z-index: 2;
+        }
+
+        .color-picker-area {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .picker-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sv-box {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            position: relative;
+            cursor: crosshair;
+            margin-bottom: 15px;
+            background: linear-gradient(to bottom, transparent, #000), linear-gradient(to right, #fff, transparent);
+            user-select: none;
+        }
+
+        .sv-cursor {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(0,0,0,0.2);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .hue-slider {
+            width: 100%;
+            height: 24px;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+            user-select: none;
+        }
+
+        .hue-thumb {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transform: translateX(-50%);
+            pointer-events: none;
+            background: transparent;
+        }
+
+        .rgb-sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-label {
+            width: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .slider-track {
+            flex: 1;
+            height: 12px;
+            border-radius: 6px;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .slider-thumb {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transform: translate(-50%, -4px);
+            pointer-events: none;
+            top: 0;
+        }
+
+        .slider-value {
+            width: 45px;
+            text-align: right;
+            font-size: 13px;
+            color: #666;
+            font-family: monospace;
+        }
+
+        .slider-red { background: linear-gradient(to right, #000, #f00); }
+        .slider-green { background: linear-gradient(to right, #000, #0f0); }
+        .slider-blue { background: linear-gradient(to right, #000, #00f); }
+
+        .color-values {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .color-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .color-input-group label {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .color-input-group input {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: monospace;
+            text-align: center;
+        }
+
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-section {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 14px;
+        }
+
+        .control-section h3 {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+        }
+
+        .style-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .style-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .style-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .font-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        body[lang="en"] .font-grid {
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        .font-btn {
+            padding: 10px 4px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            min-height: 42px;
+        }
+
+        .font-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .download-btn {
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .font-grid, body[lang="en"] .font-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body lang="zh">
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span data-lang="en">🌤️ Weather Avatar Generator</span>
+                <span data-lang="zh">🌤️ 天气头像生成器</span>
+            </h1>
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="switchLang('zh')">中文</button>
+                <button class="lang-btn" onclick="switchLang('en')">English</button>
+            </div>
+        </div>
+        
+        <!-- 天气区域 -->
+        <div class="weather-section" id="weatherSection">
+            <div class="weather-main">
+                <div class="weather-icon" id="weatherIcon">☀️</div>
+                <div class="weather-info">
+                    <h3 id="locationName">
+                        <span data-lang="zh">北京市</span>
+                        <span data-lang="en">New York</span>
+                    </h3>
+                    <div class="temp" id="temperature">25°</div>
+                    <div class="desc" id="weatherDesc">
+                        <span data-lang="zh">阳光明媚，适合出门</span>
+                        <span data-lang="en">Sunny day, perfect for outdoors</span>
+                    </div>
+                </div>
+            </div>
+            <div class="weather-details">
+                <div class="weather-detail">
+                    <div class="label">
+                        <span data-lang="zh">湿度</span>
+                        <span data-lang="en">Humidity</span>
+                    </div>
+                    <div class="value" id="humidity">45%</div>
+                </div>
+                <div class="weather-detail">
+                    <div class="label">
+                        <span data-lang="zh">风速</span>
+                        <span data-lang="en">Wind</span>
+                    </div>
+                    <div class="value" id="windSpeed">
+                        <span data-lang="zh">3级</span>
+                        <span data-lang="en">8 mph</span>
+                    </div>
+                </div>
+                <div class="weather-detail">
+                    <div class="label">
+                        <span data-lang="zh">空气质量</span>
+                        <span data-lang="en">Air Quality</span>
+                    </div>
+                    <div class="value" id="aqi">
+                        <span data-lang="zh">良</span>
+                        <span data-lang="en">Good</span>
+                    </div>
+                </div>
+            </div>
+            <div class="location-input">
+                <input type="text" id="cityInput" 
+                    placeholder="输入城市 / Enter city" 
+                    value="北京 / New York">
+                <button onclick="searchWeather()">🔍</button>
+                <button onclick="getLocation()">📍</button>
+            </div>
+        </div>
+
+        <!-- 天气主题 -->
+        <div class="weather-themes">
+            <button class="weather-theme-btn active" onclick="applyWeatherTheme('sunny')">
+                ☀️ <span data-lang="zh">晴天</span><span data-lang="en">Sunny</span>
+            </button>
+            <button class="weather-theme-btn" onclick="applyWeatherTheme('cloudy')">
+                ☁️ <span data-lang="zh">多云</span><span data-lang="en">Cloudy</span>
+            </button>
+            <button class="weather-theme-btn" onclick="applyWeatherTheme('rainy')">
+                🌧️ <span data-lang="zh">雨天</span><span data-lang="en">Rainy</span>
+            </button>
+            <button class="weather-theme-btn" onclick="applyWeatherTheme('snowy')">
+                ❄️ <span data-lang="zh">雪天</span><span data-lang="en">Snowy</span>
+            </button>
+            <button class="weather-theme-btn" onclick="applyWeatherTheme('thunder')">
+                ⚡ <span data-lang="zh">雷暴</span><span data-lang="en">Thunder</span>
+            </button>
+        </div>
+        
+        <div class="main-layout">
+            <div class="preview-area">
+                <div class="preview style-realistic sunny" id="preview">
+                    <span class="letter">A</span>
+                </div>
+            </div>
+
+            <div class="color-picker-area">
+                <div class="picker-title">
+                    <span data-lang="zh">色相 / 饱和度选择</span>
+                    <span data-lang="en">Hue / Saturation</span>
+                </div>
+                <div class="sv-box" id="svBox">
+                    <div class="sv-cursor" id="svCursor" style="left: 56%; top: 8%;"></div>
+                </div>
+                
+                <div class="picker-title">
+                    <span data-lang="zh">色相滑条</span>
+                    <span data-lang="en">Hue Slider</span>
+                </div>
+                <div class="hue-slider" id="hueSlider">
+                    <div class="hue-thumb" id="hueThumb" style="left: 64%;"></div>
+                </div>
+
+                <div class="picker-title">
+                    <span data-lang="zh">RGB 通道调节</span>
+                    <span data-lang="en">RGB Channels</span>
+                </div>
+                <div class="rgb-sliders">
+                    <div class="slider-row">
+                        <span class="slider-label" style="color:#e74c3c">R</span>
+                        <div class="slider-track slider-red" id="redTrack">
+                            <div class="slider-thumb" id="redThumb" style="background:#e74c3c; left: 40%;"></div>
+                        </div>
+                        <span class="slider-value" id="redValue">102</span>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label" style="color:#27ae60">G</span>
+                        <div class="slider-track slider-green" id="greenTrack">
+                            <div class="slider-thumb" id="greenThumb" style="background:#27ae60; left: 49%;"></div>
+                        </div>
+                        <span class="slider-value" id="greenValue">126</span>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label" style="color:#3498db">B</span>
+                        <div class="slider-track slider-blue" id="blueTrack">
+                            <div class="slider-thumb" id="blueThumb" style="background:#3498db; left: 92%;"></div>
+                        </div>
+                        <span class="slider-value" id="blueValue">234</span>
+                    </div>
+                </div>
+
+                <div class="color-values">
+                    <div class="color-input-group">
+                        <label>HEX</label>
+                        <input type="text" id="hexInput" value="#667eea">
+                    </div>
+                    <div class="color-input-group">
+                        <label>RGB</label>
+                        <input type="text" id="rgbInput" value="102, 126, 234">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="control-section">
+                <h3>
+                    <span data-lang="zh">输入名字</span>
+                    <span data-lang="en">Enter Name</span>
+                </h3>
+                <input type="text" id="nameInput" 
+                    placeholder="输入名字 / Enter name" 
+                    maxlength="10" value="张三 / Alex">
+            </div>
+
+            <div class="control-section">
+                <h3>
+                    <span data-lang="zh">选择风格</span>
+                    <span data-lang="en">Select Style</span>
+                </h3>
+                <div class="style-buttons">
+                    <button class="style-btn active" data-style="realistic">
+                        <span data-lang="zh">写实风</span>
+                        <span data-lang="en">Realistic</span>
+                    </button>
+                    <button class="style-btn" data-style="flat">
+                        <span data-lang="zh">扁平风</span>
+                        <span data-lang="en">Flat</span>
+                    </button>
+                    <button class="style-btn" data-style="glass">
+                        <span data-lang="zh">玻璃风</span>
+                        <span data-lang="en">Glass</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3 id="fontSectionTitle">
+                    <span data-lang="zh">中文字体 (8种)</span>
+                    <span data-lang="en">Artistic Fonts (24)</span>
+                </h3>
+                <div class="font-grid" id="fontGrid"></div>
+            </div>
+            
+            <button class="download-btn" onclick="downloadAvatar()">
+                💾 <span data-lang="zh">下载头像</span><span data-lang="en">Download Avatar</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 字体配置
+        const zhFonts = [
+            { id: 'noto-sans', name: '思源黑体', family: 'Noto Sans SC', size: '90px', weight: '700' },
+            { id: 'noto-serif', name: '思源宋体', family: 'Noto Serif SC', size: '90px', weight: '700' },
+            { id: 'lxgw', name: '霞鹜文楷', family: 'LXGW WenKai', size: '95px', weight: 'normal' },
+            { id: 'ysbth', name: '优设标题黑', family: '优设标题黑', size: '100px', weight: 'normal' },
+            { id: 'dyh', name: '得意黑', family: 'SmileySans-Oblique', size: '95px', weight: 'normal' },
+            { id: 'dymh', name: '抖音美好体', family: 'DouyinSansBold', size: '90px', weight: 'normal' },
+            { id: 'jnmyt', name: '荆南麦圆体', family: '荆南麦圆体', size: '95px', weight: 'normal' },
+            { id: 'alibaba', name: '阿里巴巴普惠体', family: 'Alibaba PuHuiTi 2.0', size: '90px', weight: 'normal' }
+        ];
+
+        const enFonts = [
+            { id: 'abril', name: 'Aa', family: 'Abril Fatface', size: '85px' },
+            { id: 'alfa', name: 'Aa', family: 'Alfa Slab One', size: '80px' },
+            { id: 'archivo', name: 'Aa', family: 'Archivo Black', size: '85px' },
+            { id: 'bebas', name: 'Aa', family: 'Bebas Neue', size: '100px' },
+            { id: 'bungee', name: 'Aa', family: 'Bungee', size: '85px' },
+            { id: 'bungeeShade', name: 'Aa', family: 'Bungee Shade', size: '75px' },
+            { id: 'cinzel', name: 'Aa', family: 'Cinzel', size: '85px' },
+            { id: 'comfortaa', name: 'Aa', family: 'Comfortaa', size: '90px' },
+            { id: 'fredoka', name: 'Aa', family: 'Fredoka One', size: '90px' },
+            { id: 'kanit', name: 'Aa', family: 'Kanit', size: '95px' },
+            { id: 'lobster', name: 'Aa', family: 'Lobster', size: '95px' },
+            { id: 'monoton', name: 'Aa', family: 'Monoton', size: '75px' },
+            { id: 'montserrat', name: 'Aa', family: 'Montserrat Subrayada', size: '80px' },
+            { id: 'orbitron', name: 'Aa', family: 'Orbitron', size: '80px' },
+            { id: 'marker', name: 'Aa', family: 'Permanent Marker', size: '90px' },
+            { id: 'press', name: '8b', family: 'Press Start 2P', size: '55px' },
+            { id: 'righteous', name: 'Aa', family: 'Righteous', size: '90px' },
+            { id: 'russo', name: 'Aa', family: 'Russo One', size: '90px' },
+            { id: 'rye', name: 'Aa', family: 'Rye', size: '85px' },
+            { id: 'shrikhand', name: 'Aa', family: 'Shrikhand', size: '85px' },
+            { id: 'special', name: 'Aa', family: 'Special Elite', size: '85px' },
+            { id: 'staatliches', name: 'Aa', family: 'Staatliches', size: '100px' },
+            { id: 'teko', name: 'Aa', family: 'Teko', size: '110px' },
+            { id: 'blackops', name: 'Aa', family: 'Black Ops One', size: '85px' }
+        ];
+
+        // 天气配置
+        const weatherData = {
+            zh: {
+                sunny: { r: 255, g: 180, b: 60, icon: '☀️', name: '晴天', desc: '阳光明媚，适合出门' },
+                cloudy: { r: 150, g: 160, b: 180, icon: '☁️', name: '多云', desc: '云层较厚，凉爽舒适' },
+                rainy: { r: 70, g: 130, b: 200, icon: '🌧️', name: '雨天', desc: '细雨绵绵，记得带伞' },
+                snowy: { r: 200, g: 220, b: 255, icon: '❄️', name: '雪天', desc: '雪花飘飘，注意保暖' },
+                thunder: { r: 80, g: 60, b: 120, icon: '⚡', name: '雷暴', desc: '电闪雷鸣，注意安全' }
+            },
+            en: {
+                sunny: { r: 255, g: 180, b: 60, icon: '☀️', name: 'Sunny', desc: 'Sunny day, perfect for outdoors' },
+                cloudy: { r: 150, g: 160, b: 180, icon: '☁️', name: 'Cloudy', desc: 'Cloudy skies, cool and comfortable' },
+                rainy: { r: 70, g: 130, b: 200, icon: '🌧️', name: 'Rainy', desc: 'Light rain, bring an umbrella' },
+                snowy: { r: 200, g: 220, b: 255, icon: '❄️', name: 'Snowy', desc: 'Snow falling, stay warm' },
+                thunder: { r: 80, g: 60, b: 120, icon: '⚡', name: 'Thunder', desc: 'Thunderstorm, stay safe' }
+            }
+        };
+
+        let currentLang = 'zh';
+        let currentStyle = 'realistic';
+        let currentFont = 'noto-sans';
+        let currentWeather = 'sunny';
+        let hue = 230, saturation = 56, value = 92;
+        let r = 102, g = 126, b = 234;
+
+        const preview = document.getElementById('preview');
+
+        // 语言切换
+        function switchLang(lang) {
+            currentLang = lang;
+            document.body.setAttribute('lang', lang);
+            
+            // 更新按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', 
+                    (lang === 'zh' && btn.textContent === '中文') ||
+                    (lang === 'en' && btn.textContent === 'English')
+                );
+            });
+            
+            // 重新初始化字体
+            initFontButtons();
+            
+            // 更新天气显示
+            updateWeatherDisplay();
+            
+            // 更新预览
+            updatePreviewStyle();
+        }
+
+        function init() {
+            initFontButtons();
+            updateSVBackground();
+            setupEventListeners();
+            updatePreviewStyle();
+        }
+
+        function initFontButtons() {
+            const grid = document.getElementById('fontGrid');
+            grid.innerHTML = '';
+            
+            const fonts = currentLang === 'zh' ? zhFonts : enFonts;
+            const defaultFont = currentLang === 'zh' ? 'noto-sans' : 'abril';
+            
+            // 更新当前字体
+            if (!fonts.find(f => f.id === currentFont)) {
+                currentFont = defaultFont;
+            }
+            
+            fonts.forEach((font, index) => {
+                const btn = document.createElement('button');
+                btn.className = `font-btn ${font.id === currentFont ? 'active' : ''}`;
+                btn.dataset.font = font.id;
+                btn.style.fontFamily = font.family;
+                btn.style.fontSize = '14px';
+                btn.textContent = font.name;
+                btn.onclick = () => selectFont(font.id, btn);
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectFont(fontId, btn) {
+            document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFont = fontId;
+            updatePreviewStyle();
+        }
+
+        function searchWeather() {
+            const city = document.getElementById('cityInput').value.split('/')[0].trim();
+            if (!city) return;
+            
+            const weathers = ['sunny', 'cloudy', 'rainy', 'snowy', 'thunder'];
+            const randomWeather = weathers[Math.floor(Math.random() * weathers.length)];
+            
+            const temps = { zh: { sunny: 28, cloudy: 22, rainy: 18, snowy: -2, thunder: 20 },
+                           en: { sunny: 82, cloudy: 72, rainy: 64, snowy: 28, thunder: 68 } };
+            
+            const winds = { zh: '3级', en: '8 mph' };
+            const aqis = { zh: ['优', '良', '轻度污染'], en: ['Good', 'Moderate', 'Unhealthy'] };
+            
+            const data = weatherData[currentLang][randomWeather];
+            
+            document.getElementById('locationName').querySelector(`[data-lang="${currentLang}"]`).textContent = 
+                currentLang === 'zh' ? city + '市' : city;
+            document.getElementById('temperature').textContent = temps[currentLang][randomWeather] + (currentLang === 'zh' ? '°' : '°F');
+            document.getElementById('weatherDesc').querySelector(`[data-lang="${currentLang}"]`).textContent = data.desc;
+            document.getElementById('weatherIcon').textContent = data.icon;
+            document.getElementById('humidity').textContent = Math.floor(Math.random() * 40) + 30 + '%';
+            document.getElementById('windSpeed').querySelector(`[data-lang="${currentLang}"]`).textContent = winds[currentLang];
+            document.getElementById('aqi').querySelector(`[data-lang="${currentLang}"]`).textContent = 
+                aqis[currentLang][Math.floor(Math.random() * 3)];
+            
+            applyWeatherTheme(randomWeather);
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    () => searchWeather(),
+                    () => alert(currentLang === 'zh' ? '无法获取位置，请手动输入' : 'Unable to get location')
+                );
+            } else {
+                alert(currentLang === 'zh' ? '浏览器不支持定位' : 'Geolocation not supported');
+            }
+        }
+
+        function updateWeatherDisplay() {
+            const data = weatherData[currentLang][currentWeather];
+            document.getElementById('weatherIcon').textContent = data.icon;
+            document.getElementById('weatherDesc').querySelector(`[data-lang="${currentLang}"]`).textContent = data.desc;
+        }
+
+        function applyWeatherTheme(weather) {
+            currentWeather = weather;
+            const data = weatherData[currentLang][weather];
+            
+            document.querySelectorAll('.weather-theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            r = data.r;
+            g = data.g;
+            b = data.b;
+            updateFromRGB();
+            
+            preview.classList.remove('sunny', 'cloudy', 'rainy', 'snowy', 'thunder');
+            preview.classList.add(weather);
+            
+            updateWeatherDisplay();
+        }
+
+        function hsvToRgb(h, s, v) {
+            s /= 100; v /= 100;
+            const c = v * s;
+            const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            const m = v - c;
+            let r, g, b;
+            if (h < 60) [r, g, b] = [c, x, 0];
+            else if (h < 120) [r, g, b] = [x, c, 0];
+            else if (h < 180) [r, g, b] = [0, c, x];
+            else if (h < 240) [r, g, b] = [0, x, c];
+            else if (h < 300) [r, g, b] = [x, 0, c];
+            else [r, g, b] = [c, 0, x];
+            return [
+                Math.round((r + m) * 255),
+                Math.round((g + m) * 255),
+                Math.round((b + m) * 255)
+            ];
+        }
+
+        function rgbToHsv(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            const d = max - min;
+            let h = 0, s = max === 0 ? 0 : d / max, v = max;
+            if (d !== 0) {
+                switch (max) {
+                    case r: h = ((g - b) / d + 6) % 6; break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h *= 60;
+            }
+            return [h, s * 100, v * 100];
+        }
+
+        function updateSVBackground() {
+            const hueColor = hsvToRgb(hue, 100, 100);
+            document.getElementById('svBox').style.background = `
+                linear-gradient(to bottom, transparent, #000),
+                linear-gradient(to right, #fff, rgb(${hueColor.join(',')}))
+            `;
+        }
+
+        function updateFromHSV() {
+            [r, g, b] = hsvToRgb(hue, saturation, value);
+            updateUI();
+        }
+
+        function updateFromRGB() {
+            [hue, saturation, value] = rgbToHsv(r, g, b);
+            updateSVBackground();
+            updateUI();
+        }
+
+        function updateUI() {
+            const svBox = document.getElementById('svBox');
+            document.getElementById('svCursor').style.left = (saturation / 100 * svBox.offsetWidth) + 'px';
+            document.getElementById('svCursor').style.top = ((100 - value) / 100 * svBox.offsetHeight) + 'px';
+            document.getElementById('svCursor').style.background = `rgb(${r},${g},${b})`;
+
+            const hueSlider = document.getElementById('hueSlider');
+            document.getElementById('hueThumb').style.left = (hue / 360 * hueSlider.offsetWidth) + 'px';
+            document.getElementById('hueThumb').style.background = `hsl(${hue}, 100%, 50%)`;
+
+            const redTrack = document.getElementById('redTrack');
+            const greenTrack = document.getElementById('greenTrack');
+            const blueTrack = document.getElementById('blueTrack');
+            
+            document.getElementById('redThumb').style.left = (r / 255 * redTrack.offsetWidth) + 'px';
+            document.getElementById('greenThumb').style.left = (g / 255 * greenTrack.offsetWidth) + 'px';
+            document.getElementById('blueThumb').style.left = (b / 255 * blueTrack.offsetWidth) + 'px';
+
+            document.getElementById('redValue').textContent = r;
+            document.getElementById('greenValue').textContent = g;
+            document.getElementById('blueValue').textContent = b;
+
+            const hex = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+            document.getElementById('hexInput').value = hex;
+            document.getElementById('rgbInput').value = `${r}, ${g}, ${b}`;
+
+            updatePreviewStyle();
+        }
+
+        function updatePreviewStyle() {
+            const fonts = currentLang === 'zh' ? zhFonts : enFonts;
+            const fontData = fonts.find(f => f.id === currentFont) || fonts[0];
+            
+            preview.className = `preview style-${currentStyle} ${currentWeather}`;
+            preview.style.fontFamily = fontData.family;
+            preview.style.fontSize = fontData.size;
+            if (fontData.weight) preview.style.fontWeight = fontData.weight;
+            
+            const color = `rgb(${r},${g},${b})`;
+            preview.style.setProperty('--glass-color', color);
+
+            const colors = {
+                realistic: `linear-gradient(135deg, ${color} 0%, rgb(${Math.max(0,r-50)},${Math.max(0,g-50)},${Math.max(0,b-50)}) 100%)`,
+                flat: color,
+                glass: `rgba(${r},${g},${b},0.15)`
+            };
+            
+            preview.style.background = colors[currentStyle];
+            
+            if (currentStyle === 'glass') {
+                preview.style.boxShadow = `0 8px 32px rgba(${r},${g},${b},0.3), inset 0 0 30px rgba(255,255,255,0.2)`;
+                preview.style.border = '2px solid rgba(255,255,255,0.4)';
+                preview.style.color = color;
+            } else if (currentStyle === 'realistic') {
+                preview.style.boxShadow = `0 20px 40px rgba(${r},${g},${b},0.4)`;
+                preview.style.border = 'none';
+                preview.style.color = 'white';
+            } else {
+                preview.style.boxShadow = 'none';
+                preview.style.border = 'none';
+                preview.style.color = 'white';
+            }
+        }
+
+        function setupEventListeners() {
+            let isDraggingSV = false;
+            const svBox = document.getElementById('svBox');
+            
+            svBox.addEventListener('mousedown', (e) => {
+                isDraggingSV = true;
+                updateSV(e);
+                e.preventDefault();
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (isDraggingSV) updateSV(e);
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isDraggingSV = false;
+            });
+
+            function updateSV(e) {
+                const rect = svBox.getBoundingClientRect();
+                const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                const y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+                saturation = x * 100;
+                value = (1 - y) * 100;
+                updateFromHSV();
+            }
+
+            let isDraggingHue = false;
+            const hueSlider = document.getElementById('hueSlider');
+            
+            hueSlider.addEventListener('mousedown', (e) => {
+                isDraggingHue = true;
+                updateHue(e);
+                e.preventDefault();
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (isDraggingHue) updateHue(e);
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isDraggingHue = false;
+            });
+
+            function updateHue(e) {
+                const rect = hueSlider.getBoundingClientRect();
+                const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                hue = x * 360;
+                updateSVBackground();
+                updateFromHSV();
+            }
+
+            const rgbTracks = [
+                { id: 'redTrack', index: 0 },
+                { id: 'greenTrack', index: 1 },
+                { id: 'blueTrack', index: 2 }
+            ];
+
+            rgbTracks.forEach(({ id, index }) => {
+                let isDragging = false;
+                const track = document.getElementById(id);
+                
+                track.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    updateRGB(e, index);
+                    e.preventDefault();
+                });
+                
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging) updateRGB(e, index);
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    isDragging = false;
+                });
+
+                function updateRGB(e, idx) {
+                    const rect = track.getBoundingClientRect();
+                    const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                    const val = Math.round(x * 255);
+                    if (idx === 0) r = val;
+                    else if (idx === 1) g = val;
+                    else b = val;
+                    updateFromRGB();
+                }
+            });
+
+            document.getElementById('hexInput').addEventListener('change', (e) => {
+                const hex = e.target.value.replace('#', '');
+                if (/^[0-9A-Fa-f]{6}$/.test(hex)) {
+                    r = parseInt(hex.substr(0, 2), 16);
+                    g = parseInt(hex.substr(2, 2), 16);
+                    b = parseInt(hex.substr(4, 2), 16);
+                    updateFromRGB();
+                }
+            });
+
+            document.getElementById('rgbInput').addEventListener('change', (e) => {
+                const parts = e.target.value.split(',').map(x => parseInt(x.trim()));
+                if (parts.length === 3 && parts.every(x => !isNaN(x) && x >= 0 && x <= 255)) {
+                    [r, g, b] = parts;
+                    updateFromRGB();
+                }
+            });
+
+            document.getElementById('nameInput').addEventListener('input', () => {
+                const name = document.getElementById('nameInput').value;
+                const parts = name.split('/');
+                const initial = currentLang === 'zh' 
+                    ? (parts[0] ? parts[0][0] : '张')
+                    : (parts[1] ? parts[1].trim()[0].toUpperCase() : 'A');
+                preview.querySelector('.letter').textContent = initial;
+            });
+
+            document.querySelectorAll('.style-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentStyle = btn.dataset.style;
+                    updatePreviewStyle();
+                });
+            });
+        }
+
+        function downloadAvatar() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+            const size = 400;
+            const text = preview.querySelector('.letter').textContent;
+            const fonts = currentLang === 'zh' ? zhFonts : enFonts;
+            const fontData = fonts.find(f => f.id === currentFont) || fonts[0];
+            const color = `rgb(${r},${g},${b})`;
+            
+            if (currentStyle === 'realistic') {
+                const grd = ctx.createLinearGradient(0, 0, size, size);
+                grd.addColorStop(0, color);
+                grd.addColorStop(1, `rgb(${Math.max(0,r-50)},${Math.max(0,g-50)},${Math.max(0,b-50)})`);
+                ctx.fillStyle = grd;
+                ctx.fillRect(0, 0, size, size);
+            } else if (currentStyle === 'flat') {
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                ctx.fillStyle = '#0a0a1a';
+                ctx.fillRect(0, 0, size, size);
+                ctx.fillStyle = `rgba(${r},${g},${b},0.15)`;
+                ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.roundRect(40, 40, 320, 320, 40);
+                ctx.fill();
+                ctx.stroke();
+            }
+            
+            const fontStyle = fontData.weight ? `${fontData.weight} ${fontData.size}` : fontData.size;
+            ctx.font = `${fontStyle} "${fontData.family}"`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            if (currentStyle === 'glass') {
+                ctx.fillStyle = color;
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 50;
+            } else {
+                ctx.fillStyle = 'white';
+                if (currentStyle === 'realistic') {
+                    ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                    ctx.shadowBlur = 15;
+                    ctx.shadowOffsetX = 4;
+                    ctx.shadowOffsetY = 4;
+                }
+            }
+            
+            const yOffset = currentLang === 'en' && currentFont === 'press' ? 15 : 20;
+            ctx.fillText(text, size/2, size/2 + yOffset);
+            
+            const prefix = currentLang === 'zh' ? 'avatar' : 'avatar';
+            const weatherName = weatherData[currentLang][currentWeather].name;
+            const link = document.createElement('a');
+            link.download = `${prefix}-${currentStyle}-${weatherName}-${Date.now()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        init();
+    </script>
+</body>
+</html>
