@@ -1,47 +1,84 @@
-🌤️ Weather Avatar Generator | 天气头像生成器
+## 📢 更新公告 / Update Announcement
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-blue)](https://pibo0608.github.io/weather-avatar-generator)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+### 天气头像生成器 v5.1 正式发布 / Weather Avatar Generator v5.1 Released
 
-> A bilingual avatar generator with weather-themed colors and animated effects.
-> 双语天气头像生成器，支持动态天气特效和专业级 RGB 调色。
+> 核心定位：专业调色 × 天气情境 × 双语合并 × 云端计数 × 个性表达
+> Core Positioning: Professional Color × Weather Context × Bilingual Merge × Cloud Counter × Personalized Expression
 
-🚀 **[Live Demo | 在线演示](https://pibo0608.github.io/weather-avatar-generator)**
-
----
-
-## ✨ Features | 特性
-
-| Feature | 中文说明 |
-|---------|---------|
-| 🌐 **Bilingual** | 一键切换 中文/English |
-| 🌤️ **5 Weather Themes** | 晴天/多云/雨天/雪天/雷暴，自动配色+动画 |
-| 🎨 **RGB Color Picker** | HSV 三维调色盘，色相/饱和度/明度精准调节 |
-| 🔤 **32 Fonts** | 8 中文字体 + 24 英文字体 |
-| 💎 **3 Styles** | 写实风/扁平风/玻璃风 |
-| 🔢 **Download Counter** | 下载计数器，云端同步总下载次数 ✨新增 |
-| 💾 **Export** | 高清 PNG 下载 (400x400) |
+**📅 发布日期 / Release Date**：2026年4月17日 / April 17, 2026
 
 ---
 
-## 🚀 Quick Start | 快速开始
+### 🎉 本次更新内容 / What's New in v5.1
 
-### 在线使用
-直接访问：https://pibo0608.github.io/weather-avatar-generator
-
-### 本地使用
-1. 下载 `index.html` 和 `work.js`
-2. 需要配合 Cloudflare Worker 使用计数功能（可选）
+| 中文 | English |
+|------|---------|
+| ✨ **新增下载计数器** | ✨ **Added download counter** |
+| ☁️ **Cloudflare Worker 后端计数服务** | ☁️ **Cloudflare Worker backend counter service** |
+| 🔢 **右下角固定显示总下载次数** | 🔢 **Fixed display at bottom-right corner showing total downloads** |
+| 🌐 **中英文双语自动切换** | 🌐 **Automatic bilingual (Chinese/English) switching** |
+| 🎬 **下载时计数器缩放动画** | 🎬 **Scale animation effect on download** |
 
 ---
 
-## 📁 File Structure | 文件结构
+### 🌍 多平台部署 / Multi-Platform Deployment
+
+本次更新已同步部署至以下四个平台，体验一致：
+This update has been deployed to the following four platforms with consistent experience:
+
+| 平台 / Platform | 地址 / URL | 状态 / Status |
+|----------------|------------|----------------|
+| **GitHub Pages** | [pibo0608.github.io/weather-avatar-generator](https://pibo0608.github.io/weather-avatar-generator) | ✅ 主站 / Primary |
+| **Netlify** | [weather-avatar-generator.netlify.app](https://weather-avatar-generator.netlify.app) | ✅ 镜像 / Mirror |
+| **Vercel** | [weather-avatar-generator.vercel.app](https://weather-avatar-generator.vercel.app) | ✅ 镜像 / Mirror |
+| **Cloudflare Workers** | [weather-avatar-generator.3466211450.workers.dev](https://weather-avatar-generator.3466211450.workers.dev) | ✅ 后端API / Backend API |
+
+---
+
+### ✨ 完整功能特性 / Full Features
+
+| 中文 | English |
+|------|---------|
+| 🌤️ **5种天气主题**（晴天/多云/雨天/雪天/雷暴） | 🌤️ **5 weather themes** (Sunny/Cloudy/Rainy/Snowy/Thunder) |
+| 🎨 **HSV 专业调色盘**（色相/饱和度/明度） | 🎨 **HSV professional color picker** (Hue/Saturation/Value) |
+| 🔤 **32种艺术字体**（8中文 + 24英文） | 🔤 **32 artistic fonts** (8 Chinese + 24 English) |
+| 💎 **3种视觉风格**（写实/扁平/玻璃） | 💎 **3 visual styles** (Realistic/Flat/Glass) |
+| 🌐 **一键切换中英文** | 🌐 **One-click bilingual switching** |
+| 💾 **高清 PNG 下载**（400x400） | 💾 **High-quality PNG download** (400x400) |
+| 🎨 **RGB 滑条独立调节** | 🎨 **Independent RGB slider control** |
+| 📥 **下载计数器云端同步** | 📥 **Download counter cloud sync** |
+
+---
+
+### 🔧 技术架构 / Tech Stack
+
+| 前端 / Frontend | 后端 / Backend |
+|----------------|----------------|
+| HTML5 + CSS3 + JavaScript | Cloudflare Workers |
+| Google Fonts + 中文字体库 / Chinese Fonts | KV 存储 / KV Storage |
+| 响应式设计 / Responsive Design | RESTful API |
+| HSV 色彩空间算法 / HSV Color Space Algorithm | 跨域支持 / CORS Support |
+
+---
+
+### 📝 使用说明 / How to Use
+
+| 步骤 / Step | 说明 / Description |
+|-------------|-------------------|
+| 1 | 访问以上任意一个平台地址 / Visit any of the platform URLs above |
+| 2 | 输入名字，选择天气主题、风格和字体 / Enter your name, select weather theme, style and font |
+| 3 | 使用 HSV 调色盘或 RGB 滑条自由配色 / Use HSV color picker or RGB sliders to customize colors |
+| 4 | 点击下载按钮，计数器自动 +1 / Click download button, counter automatically increases by 1 |
+
+---
+
+### 📁 文件结构 / File Structure
 
 ```
 
 weather-avatar-generator/
 ├── index.html   # 主程序（双语版 + 下载计数器）
-├── work.js      # Cloudflare Worker 后端计数服务 ✨新增
+├── work.js      # Cloudflare Worker 后端计数服务
 ├── README.md    # 项目说明
 └── LICENSE      # MIT 开源协议
 
@@ -49,47 +86,35 @@ weather-avatar-generator/
 
 ---
 
-## 🔧 Backend Setup | 后端配置（可选）
+### 🔗 相关链接 / Links
 
-下载计数器需要 Cloudflare Worker 支持：
-
-1. 部署 `work.js` 到 Cloudflare Workers
-2. 绑定 KV 命名空间：`AVATAR_COUNTER`
-3. 修改 `index.html` 中的 `COUNTER_API` 地址
-
-无需计数功能可跳过此步骤。
+| 中文 | English |
+|------|---------|
+| **GitHub 仓库** | [pibo0608/weather-avatar-generator](https://github.com/pibo0608/weather-avatar-generator) |
+| **在线体验** | 任选以上四个地址之一 / Choose any of the four URLs above |
+| **反馈建议** | 欢迎在 GitHub 提交 Issue / Welcome to submit issues on GitHub |
 
 ---
 
-## 📝 Update Log | 更新日志
+### 📜 版本历史 / Version History
 
-### v5.1 (2026-04-17) - 热更新
-- ✨ 新增下载计数器功能
-- ✨ 新增 Cloudflare Worker 后端服务
-- 🐛 优化移动端适配
-
-### v5.0
-- 🎉 首次发布
-- 双语切换 + 天气主题 + RGB 调色
-
----
-
-## 🤝 Credits | 致谢
-
-**构想者 | Conceptor**: Pibo
-
-**开发协助 | Development**: AI Assistant
-
-**字体来源 | Fonts**:
-- [Google Fonts](https://fonts.google.com)
-- [霞鹜文楷](https://github.com/lxgw/LxgwWenKai) by lxgw
-- [优设标题黑](https://www.uisdc.com/uisdc-title-font) by 优设
-- [得意黑](https://github.com/atelier-anchor/smiley-sans) by atelier-anchor
+| 版本 | 说明 | 日期 |
+|------|------|------|
+| v5.1 | 新增下载计数器 + 云端同步 | 2026.04.17 |
+| v5.0 | 双语合并（中英文一键切换） | 2026.04.16 |
+| v4.4 | 新增天气主题（5种天气+动画特效） | 2026.04.15 |
+| v4.0 | HSV 专业调色盘 + RGB 滑条 | 2026.04.14 |
+| v3.0 | 24字体 + HEX 自定义颜色 | 2026.04.13 |
+| v2.0 | 6种 Google Fonts 艺术字体 | 2026.04.12 |
+| v1.0 | 极简版（3风格 + 8颜色） | 2026.04.11 |
+| v0.1 | AI头像初版（有bug） | 2026.04.10 |
 
 ---
 
-## 📄 License | 开源协议
+> 感谢使用！让每一次下载都被看见。
+> Thank you for using! Every download counts.
 
-[MIT License](LICENSE) © 2024-2026 Weather Avatar Generator
+---
 
-免费用于个人和商业用途 | Free for personal and commercial use.
+*📋 公告撰写时间 / Announcement Written*：2026年4月17日 / April 17, 2026
+*✍️ 撰写人 / Author*：Pibo
