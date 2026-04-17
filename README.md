@@ -79,6 +79,7 @@ This update has been deployed to the following four platforms with consistent ex
 weather-avatar-generator/
 ├── index.html   # 主程序（双语版 + 下载计数器）
 ├── work.js      # Cloudflare Worker 后端计数服务
+├── package.json    # npm 包配置（GitHub Packages 发布用）
 ├── README.md    # 项目说明
 └── LICENSE      # MIT 开源协议
 

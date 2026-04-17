@@ -1,0 +1,45 @@
+{
+  "name": "@pibo0608/weather-avatar-generator",
+  "version": "5.1.0",
+  "description": "Weather Avatar Generator - 双语天气头像生成器，支持下载计数器 / Bilingual weather avatar generator with download counter",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "deploy": "git push origin main"
+  },
+  "keywords": [
+    "avatar",
+    "weather",
+    "generator",
+    "bilingual",
+    "counter",
+    "cloudflare-workers",
+    "hsv-color-picker",
+    "avatar-generator",
+    "weather-themes",
+    "download-counter"
+  ],
+  "author": {
+    "name": "pibo0608",
+    "email": "",
+    "url": "https://github.com/pibo0608"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pibo0608/weather-avatar-generator.git"
+  },
+  "homepage": "https://pibo0608.github.io/weather-avatar-generator",
+  "bugs": {
+    "url": "https://github.com/pibo0608/weather-avatar-generator/issues"
+  },
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "files": [
+    "index.html",
+    "work.js",
+    "README.md",
+    "LICENSE"
+  ]
+}
