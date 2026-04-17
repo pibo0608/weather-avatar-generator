@@ -75,7 +75,12 @@
             font-family: 'Righteous', cursive;
         }
 
-        /* 语言切换按钮 */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .lang-switcher {
             display: flex;
             gap: 10px;
@@ -97,7 +102,309 @@
             border-color: var(--primary);
         }
 
-        /* 隐藏非当前语言的元素 */
+        .theme-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-btn:hover {
+            transform: rotate(20deg) scale(1.1);
+        }
+
+        .announcement-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .announcement-btn:hover {
+            background: #f5f5f5;
+            transform: scale(1.1);
+        }
+
+        .announcement-btn.has-new::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .settings-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-btn:hover {
+            background: #f5f5f5;
+            transform: rotate(30deg);
+        }
+
+        .announcement-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .announcement-modal.active {
+            display: flex;
+        }
+
+        .announcement-content {
+            background: white;
+            border-radius: 20px;
+            padding: 0;
+            max-width: 450px;
+            width: 90%;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .announcement-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .announcement-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .announcement-title {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .announcement-body {
+            padding: 25px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .update-time {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .update-list {
+            list-style: none;
+        }
+
+        .update-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .update-list li:last-child {
+            border-bottom: none;
+        }
+
+        .update-badge {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .update-text {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .announcement-footer {
+            padding: 20px 25px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dont-show-again {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .dont-show-again input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .announcement-close {
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .announcement-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .about-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-modal.active {
+            display: flex;
+        }
+
+        .about-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        .about-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .about-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .about-info {
+            text-align: left;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .about-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .about-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .about-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .about-value {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .about-credits {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .about-close {
+            padding: 12px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .about-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
         [data-lang] {
             display: none;
         }
@@ -115,12 +422,11 @@
             display: inline;
         }
 
-        /* 天气区域 */
         .weather-section {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             color: white;
             display: flex;
             align-items: center;
@@ -206,6 +512,33 @@
             color: var(--primary);
         }
 
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .progress-container.active {
+            opacity: 1;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+
+        .progress-bar.complete {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+        }
+
         .weather-themes {
             display: flex;
             gap: 10px;
@@ -216,7 +549,7 @@
         .weather-theme-btn {
             padding: 8px 15px;
             border-radius: 20px;
-            border: 2px solid transparent;
+            border: 2px solid rgba(255,255,255,0.5);
             background: rgba(255,255,255,0.2);
             color: white;
             cursor: pointer;
@@ -225,11 +558,22 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
-        .weather-theme-btn:hover, .weather-theme-btn.active {
+        .weather-theme-btn:hover {
             background: white;
             color: var(--primary);
+            border-color: white;
+            text-shadow: none;
+        }
+
+        .weather-theme-btn.active {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-shadow: none;
         }
 
         .main-layout {
@@ -252,6 +596,10 @@
             .header {
                 flex-direction: column;
                 text-align: center;
+            }
+            .header-right {
+                width: 100%;
+                justify-content: center;
             }
         }
 
@@ -603,7 +951,6 @@
             }
         }
 
-        /* ==================== 下载计数器样式 ==================== */
         .download-counter {
             position: fixed;
             bottom: 20px;
@@ -640,22 +987,186 @@
                 justify-content: center;
             }
         }
+
+        /* 深色模式样式 */
+        body.dark-mode {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+
+        .dark-mode .container {
+            background: #1e1e2f;
+            color: #e0e0e0;
+        }
+
+        .dark-mode h1 {
+            color: #ffffff;
+        }
+
+        .dark-mode .lang-btn,
+        .dark-mode .theme-btn,
+        .dark-mode .announcement-btn,
+        .dark-mode .settings-btn {
+            background: #2d2d44;
+            border-color: #4a4a6a;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .lang-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .dark-mode .lang-btn:hover,
+        .dark-mode .theme-btn:hover,
+        .dark-mode .announcement-btn:hover,
+        .dark-mode .settings-btn:hover {
+            background: #3d3d5c;
+        }
+
+        .dark-mode .color-picker-area,
+        .dark-mode .control-section {
+            background: #2d2d44;
+        }
+
+        .dark-mode .picker-title {
+            color: #a0a0b0;
+        }
+
+        .dark-mode input[type="text"] {
+            background: #2d2d44;
+            color: #e0e0e0;
+            border-color: #4a4a6a;
+        }
+
+        .dark-mode input[type="text"]:focus {
+            border-color: var(--primary);
+        }
+
+        .dark-mode .about-content,
+        .dark-mode .announcement-content {
+            background: #1e1e2f;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .about-title,
+        .dark-mode .announcement-title {
+            color: #ffffff;
+        }
+
+        .dark-mode .about-info,
+        .dark-mode .announcement-body {
+            background: #2d2d44;
+        }
+
+        .dark-mode .about-label,
+        .dark-mode .update-time {
+            color: #a0a0b0;
+        }
+
+        .dark-mode .about-value,
+        .dark-mode .update-text {
+            color: #e0e0e0;
+        }
+
+        .dark-mode .about-info-row {
+            border-color: #4a4a6a;
+        }
+
+        .dark-mode .update-list li {
+            border-color: #4a4a6a;
+        }
+
+        .dark-mode .dont-show-again {
+            color: #a0a0b0;
+        }
+
+        .dark-mode .dont-show-again input[type="checkbox"] {
+            accent-color: var(--primary);
+        }
+
+        .dark-mode .slider-value {
+            color: #a0a0b0;
+        }
+
+        .dark-mode .color-input-group label {
+            color: #a0a0b0;
+        }
+
+        .dark-mode .color-input-group input {
+            background: #2d2d44;
+            color: #e0e0e0;
+            border-color: #4a4a6a;
+        }
+
+        .dark-mode .style-btn {
+            background: #2d2d44;
+            border-color: #4a4a6a;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .style-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .dark-mode .font-btn {
+            background: #2d2d44;
+            border-color: #4a4a6a;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .font-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .dark-mode .weather-theme-btn {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .dark-mode .weather-theme-btn:hover,
+        .dark-mode .weather-theme-btn.active {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+
+        .dark-mode .location-input input {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .dark-mode .location-input input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .dark-mode .download-counter {
+            background: linear-gradient(135deg, #4a4a6a 0%, #6a6a9a 100%);
+        }
     </style>
 </head>
 <body lang="zh">
     <div class="container">
         <div class="header">
             <h1>
-                <span data-lang="en">🌤️ Weather Avatar Generator</span>
                 <span data-lang="zh">🌤️ 天气头像生成器</span>
+                <span data-lang="en">🌤️ Weather Avatar Generator</span>
             </h1>
-            <div class="lang-switcher">
-                <button class="lang-btn active" onclick="switchLang('zh')">中文</button>
-                <button class="lang-btn" onclick="switchLang('en')">English</button>
+            <div class="header-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="switchLang('zh')">中文</button>
+                    <button class="lang-btn" onclick="switchLang('en')">English</button>
+                </div>
+                <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换主题 / Toggle Theme">🌙</button>
+                <button class="announcement-btn" id="announcementBtn" onclick="openAnnouncement()" title="公告 | Announcement">📢</button>
+                <button class="settings-btn" onclick="openAbout()" title="关于 | About">⚙️</button>
             </div>
         </div>
         
-        <!-- 天气区域 -->
         <div class="weather-section" id="weatherSection">
             <div class="weather-main">
                 <div class="weather-icon" id="weatherIcon">☀️</div>
@@ -701,15 +1212,16 @@
                 </div>
             </div>
             <div class="location-input">
-                <input type="text" id="cityInput" 
-                    placeholder="输入城市 / Enter city" 
-                    value="北京 / New York">
+                <input type="text" id="cityInput" placeholder="输入城市 / Enter city" value="北京 / New York">
                 <button onclick="searchWeather()">🔍</button>
                 <button onclick="getLocation()">📍</button>
             </div>
         </div>
 
-        <!-- 天气主题 -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
         <div class="weather-themes">
             <button class="weather-theme-btn active" onclick="applyWeatherTheme('sunny')">
                 ☀️ <span data-lang="zh">晴天</span><span data-lang="en">Sunny</span>
@@ -799,9 +1311,7 @@
                     <span data-lang="zh">输入名字</span>
                     <span data-lang="en">Enter Name</span>
                 </h3>
-                <input type="text" id="nameInput" 
-                    placeholder="输入名字 / Enter name" 
-                    maxlength="10" value="张三 / Alex">
+                <input type="text" id="nameInput" placeholder="输入名字 / Enter name" maxlength="10" value="张三 / Alex">
             </div>
 
             <div class="control-section">
@@ -839,17 +1349,163 @@
         </div>
     </div>
 
-    <!-- ==================== 下载计数器显示 ==================== -->
+    <div class="announcement-modal" id="announcementModal" onclick="closeAnnouncement(event)">
+        <div class="announcement-content" onclick="event.stopPropagation()">
+            <div class="announcement-header">
+                <div class="announcement-icon">📢</div>
+                <div class="announcement-title">
+                    <span data-lang="zh">本次更新公告</span>
+                    <span data-lang="en">Update Announcement</span>
+                </div>
+            </div>
+            <div class="announcement-body">
+                <div class="update-time" id="updateTime">2026.04.17</div>
+                <ul class="update-list">
+                    <li>
+                        <span class="update-badge">NEW</span>
+                        <span class="update-text">
+                            <span data-lang="zh">接入 Open-Meteo 真实天气 API，支持全球城市实时天气查询</span>
+                            <span data-lang="en">Integrated Open-Meteo real weather API for global cities</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="update-badge">NEW</span>
+                        <span class="update-text">
+                            <span data-lang="zh">新增进度条动画，查询天气时显示加载进度</span>
+                            <span data-lang="en">Added progress bar animation for weather queries</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="update-badge">UI</span>
+                        <span class="update-text">
+                            <span data-lang="zh">优化天气主题按钮样式，添加描边效果</span>
+                            <span data-lang="en">Enhanced weather theme buttons with outline effect</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="update-badge">FIX</span>
+                        <span class="update-text">
+                            <span data-lang="zh">修复语言切换时字体显示异常问题</span>
+                            <span data-lang="en">Fixed font display issues when switching languages</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="announcement-footer">
+                <label class="dont-show-again">
+                    <input type="checkbox" id="dontShowAgain">
+                    <span data-lang="zh">我知道了，今日不再提醒</span>
+                    <span data-lang="en">Got it, don't remind me today</span>
+                </label>
+                <button class="announcement-close" onclick="closeAnnouncement()">
+                    <span data-lang="zh">关闭</span>
+                    <span data-lang="en">Close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-modal" id="aboutModal" onclick="closeAbout(event)">
+        <div class="about-content" onclick="event.stopPropagation()">
+            <div class="about-icon">🎨</div>
+            <div class="about-title">
+                <span data-lang="zh">天气头像生成器</span>
+                <span data-lang="en">Weather Avatar Generator</span>
+            </div>
+            <div class="about-info">
+                <div class="about-info-row">
+                    <span class="about-label">
+                        <span data-lang="zh">撰写者</span>
+                        <span data-lang="en">Authors</span>
+                    </span>
+                    <span class="about-value">AI & Pibo</span>
+                </div>
+                <div class="about-info-row">
+                    <span class="about-label">
+                        <span data-lang="zh">版本</span>
+                        <span data-lang="en">Version</span>
+                    </span>
+                    <span class="about-value">v5.2</span>
+                </div>
+                <div class="about-info-row">
+                    <span class="about-label">
+                        <span data-lang="zh">日期</span>
+                        <span data-lang="en">Date</span>
+                    </span>
+                    <span class="about-value">2026.4.17</span>
+                </div>
+            </div>
+            <div class="about-credits">
+                <span data-lang="zh">一款支持真实天气数据的双语头像生成器</span>
+                <span data-lang="en">A bilingual avatar generator with real weather data</span>
+            </div>
+            <button class="about-close" onclick="closeAbout()">
+                <span data-lang="zh">关闭</span>
+                <span data-lang="en">Close</span>
+            </button>
+        </div>
+    </div>
+
     <div class="download-counter">
         📥 <span data-lang="zh">总下载次数</span><span data-lang="en">Total Downloads</span>
         <span class="counter-number" id="counterNumber">0</span>
     </div>
+        <script>
+        const ANNOUNCEMENT_KEY = 'weather_avatar_announcement';
+        const UPDATE_DATE = '2026.04.17';
 
-    <script>
-        // ==================== 下载计数器配置 ====================
+        function shouldShowAnnouncement() {
+            const stored = localStorage.getItem(ANNOUNCEMENT_KEY);
+            if (!stored) return true;
+            const data = JSON.parse(stored);
+            const today = new Date().toDateString();
+            if (data.date !== today || data.updateDate !== UPDATE_DATE) return true;
+            return !data.dontShow;
+        }
+
+        function saveAnnouncementState(dontShow) {
+            const data = {
+                date: new Date().toDateString(),
+                dontShow: dontShow,
+                updateDate: UPDATE_DATE
+            };
+            localStorage.setItem(ANNOUNCEMENT_KEY, JSON.stringify(data));
+        }
+
+        function openAnnouncement() {
+            document.getElementById('announcementModal').classList.add('active');
+            document.getElementById('dontShowAgain').checked = false;
+        }
+
+        function closeAnnouncement(event) {
+            if (!event || event.target.id === 'announcementModal') {
+                const dontShow = document.getElementById('dontShowAgain').checked;
+                saveAnnouncementState(dontShow);
+                document.getElementById('announcementModal').classList.remove('active');
+                if (dontShow) {
+                    document.getElementById('announcementBtn').classList.remove('has-new');
+                }
+            }
+        }
+
+        function initAnnouncement() {
+            document.getElementById('updateTime').textContent = UPDATE_DATE;
+            const stored = localStorage.getItem(ANNOUNCEMENT_KEY);
+            if (!stored) {
+                document.getElementById('announcementBtn').classList.add('has-new');
+            } else {
+                const data = JSON.parse(stored);
+                if (data.updateDate !== UPDATE_DATE) {
+                    document.getElementById('announcementBtn').classList.add('has-new');
+                }
+            }
+            if (shouldShowAnnouncement()) {
+                setTimeout(() => openAnnouncement(), 500);
+            }
+        }
+
         const COUNTER_API = 'https://avatar-counter.3466211450.workers.dev';
 
-        // 获取计数
         async function getDownloadCount() {
             try {
                 const response = await fetch(`${COUNTER_API}/count`);
@@ -860,14 +1516,11 @@
             }
         }
 
-        // 增加计数
         async function incrementDownloadCount() {
             try {
                 const response = await fetch(`${COUNTER_API}/increment`, { method: 'POST' });
                 const data = await response.json();
                 document.getElementById('counterNumber').textContent = data.count.toLocaleString();
-                
-                // 动画效果
                 const counter = document.querySelector('.download-counter');
                 if (counter) {
                     counter.style.transform = 'scale(1.1)';
@@ -878,7 +1531,23 @@
             }
         }
 
-        // 字体配置
+        function openAbout() {
+            document.getElementById('aboutModal').classList.add('active');
+        }
+
+        function closeAbout(event) {
+            if (!event || event.target.id === 'aboutModal') {
+                document.getElementById('aboutModal').classList.remove('active');
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAnnouncement();
+                closeAbout();
+            }
+        });
+
         const zhFonts = [
             { id: 'noto-sans', name: '思源黑体', family: 'Noto Sans SC', size: '90px', weight: '700' },
             { id: 'noto-serif', name: '思源宋体', family: 'Noto Serif SC', size: '90px', weight: '700' },
@@ -917,7 +1586,6 @@
             { id: 'blackops', name: 'Aa', family: 'Black Ops One', size: '85px' }
         ];
 
-        // 天气配置
         const weatherData = {
             zh: {
                 sunny: { r: 255, g: 180, b: 60, icon: '☀️', name: '晴天', desc: '阳光明媚，适合出门' },
@@ -944,73 +1612,65 @@
 
         const preview = document.getElementById('preview');
 
-        // 语言切换
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeBtn').textContent = '☀️';
+            }
+        }
+
         function switchLang(lang) {
             currentLang = lang;
             document.body.setAttribute('lang', lang);
-            
-            // 更新按钮状态
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.toggle('active', 
                     (lang === 'zh' && btn.textContent === '中文') ||
                     (lang === 'en' && btn.textContent === 'English')
                 );
             });
-            
-            // 重新初始化字体
             initFontButtons();
-            
-            // 更新天气显示
             updateWeatherDisplay();
-            
-            // 更新预览
             updatePreviewStyle();
-            
-            // 更新计数器文字
             updateCounterLanguage();
         }
         
-        // 更新计数器语言
         function updateCounterLanguage() {
             const counterText = document.querySelector('.download-counter');
             if (counterText) {
                 const zhSpan = counterText.querySelector('[data-lang="zh"]');
                 const enSpan = counterText.querySelector('[data-lang="en"]');
                 if (zhSpan && enSpan) {
-                    if (currentLang === 'zh') {
-                        zhSpan.style.display = 'inline';
-                        enSpan.style.display = 'none';
-                    } else {
-                        zhSpan.style.display = 'none';
-                        enSpan.style.display = 'inline';
-                    }
+                    zhSpan.style.display = currentLang === 'zh' ? 'inline' : 'none';
+                    enSpan.style.display = currentLang === 'en' ? 'inline' : 'none';
                 }
             }
         }
 
         function init() {
+            initTheme();
             initFontButtons();
             updateSVBackground();
             setupEventListeners();
             updatePreviewStyle();
-            // ==================== 初始化计数器 ====================
             getDownloadCount();
             updateCounterLanguage();
+            initAnnouncement();
         }
 
         function initFontButtons() {
             const grid = document.getElementById('fontGrid');
             grid.innerHTML = '';
-            
             const fonts = currentLang === 'zh' ? zhFonts : enFonts;
             const defaultFont = currentLang === 'zh' ? 'noto-sans' : 'abril';
-            
-            // 更新当前字体
-            if (!fonts.find(f => f.id === currentFont)) {
-                currentFont = defaultFont;
-            }
-            
-            fonts.forEach((font, index) => {
+            if (!fonts.find(f => f.id === currentFont)) currentFont = defaultFont;
+            fonts.forEach((font) => {
                 const btn = document.createElement('button');
                 btn.className = `font-btn ${font.id === currentFont ? 'active' : ''}`;
                 btn.dataset.font = font.id;
@@ -1029,32 +1689,130 @@
             updatePreviewStyle();
         }
 
-        function searchWeather() {
+        let progressInterval = null;
+
+        function showProgress() {
+            const container = document.getElementById('progressContainer');
+            const bar = document.getElementById('progressBar');
+            container.classList.add('active');
+            bar.classList.remove('complete');
+            bar.style.width = '0%';
+            let width = 0;
+            progressInterval = setInterval(() => {
+                width += 2;
+                bar.style.width = width + '%';
+                if (width >= 100) {
+                    clearInterval(progressInterval);
+                    bar.classList.add('complete');
+                    setTimeout(() => container.classList.remove('active'), 300);
+                }
+            }, 30);
+        }
+
+        function hideProgress() {
+            const container = document.getElementById('progressContainer');
+            const bar = document.getElementById('progressBar');
+            clearInterval(progressInterval);
+            bar.style.width = '100%';
+            bar.classList.add('complete');
+            setTimeout(() => container.classList.remove('active'), 300);
+        }
+
+        function setLoadingState() {
+            const locationEl = document.getElementById('locationName').querySelector(`[data-lang="${currentLang}"]`);
+            locationEl.dataset.originalText = locationEl.textContent;
+            locationEl.textContent = currentLang === 'zh' ? '查询中...' : 'Loading...';
+            document.getElementById('temperature').textContent = '?';
+            const descEl = document.getElementById('weatherDesc').querySelector(`[data-lang="${currentLang}"]`);
+            descEl.dataset.originalText = descEl.textContent;
+            descEl.textContent = '?';
+            document.getElementById('weatherIcon').textContent = '⏳';
+        }
+
+        function restoreLoadingState(locationName, weatherDesc, temp, icon) {
+            document.getElementById('locationName').querySelector(`[data-lang="${currentLang}"]`).textContent = locationName;
+            document.getElementById('temperature').textContent = temp;
+            document.getElementById('weatherDesc').querySelector(`[data-lang="${currentLang}"]`).textContent = weatherDesc;
+            document.getElementById('weatherIcon').textContent = icon;
+        }
+
+        async function searchWeather() {
             const city = document.getElementById('cityInput').value.split('/')[0].trim();
             if (!city) return;
-            
+            showProgress();
+            setLoadingState();
+            try {
+                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=${currentLang}&format=json`);
+                const geoData = await geoRes.json();
+                if (!geoData.results || geoData.results.length === 0) {
+                    alert(currentLang === 'zh' ? '未找到该城市' : 'City not found');
+                    hideProgress();
+                    return;
+                }
+                const { latitude, longitude, name } = geoData.results[0];
+                const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&timezone=auto`);
+                const weatherDataRes = await weatherRes.json();
+                const code = weatherDataRes.current.weather_code;
+                const weatherType = getWeatherTypeFromCode(code);
+                await waitForProgress();
+                const locationDisplay = currentLang === 'zh' ? name + '市' : name;
+                const tempDisplay = Math.round(weatherDataRes.current.temperature_2m) + '°';
+                const data = weatherData[currentLang][weatherType];
+                restoreLoadingState(locationDisplay, data.desc, tempDisplay, data.icon);
+                applyRealWeatherTheme(weatherType, code);
+            } catch (error) {
+                console.log('Weather API failed, using fallback', error);
+                await waitForProgress();
+                fallbackWeather(city);
+            }
+        }
+
+        function waitForProgress() {
+            return new Promise(resolve => {
+                const checkInterval = setInterval(() => {
+                    const bar = document.getElementById('progressBar');
+                    const width = parseFloat(bar.style.width) || 0;
+                    if (width >= 100) {
+                        clearInterval(checkInterval);
+                        resolve();
+                    }
+                }, 50);
+            });
+        }
+
+        function getWeatherTypeFromCode(code) {
+            if (code === 0) return 'sunny';
+            if (code >= 1 && code <= 3) return 'cloudy';
+            if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return 'rainy';
+            if ([71, 73, 75, 77, 85, 86].includes(code)) return 'snowy';
+            if ([95, 96, 99].includes(code)) return 'thunder';
+            return 'sunny';
+        }
+
+        function applyRealWeatherTheme(weatherType, code) {
+            currentWeather = weatherType;
+            const data = weatherData[currentLang][weatherType];
+            document.querySelectorAll('.weather-theme-btn').forEach(btn => btn.classList.remove('active'));
+            const weatherNames = { sunny: '晴天|Sunny', cloudy: '多云|Cloudy', rainy: '雨天|Rainy', snowy: '雪天|Snowy', thunder: '雷暴|Thunder' };
+            const nameMatch = weatherNames[weatherType].split('|')[currentLang === 'zh' ? 0 : 1];
+            document.querySelectorAll('.weather-theme-btn').forEach(btn => {
+                if (btn.textContent.includes(nameMatch)) btn.classList.add('active');
+            });
+            r = data.r; g = data.g; b = data.b;
+            updateFromRGB();
+            preview.classList.remove('sunny', 'cloudy', 'rainy', 'snowy', 'thunder');
+            preview.classList.add(weatherType);
+        }
+
+        function fallbackWeather(city) {
             const weathers = ['sunny', 'cloudy', 'rainy', 'snowy', 'thunder'];
             const randomWeather = weathers[Math.floor(Math.random() * weathers.length)];
-            
-            const temps = { zh: { sunny: 28, cloudy: 22, rainy: 18, snowy: -2, thunder: 20 },
-                           en: { sunny: 82, cloudy: 72, rainy: 64, snowy: 28, thunder: 68 } };
-            
-            const winds = { zh: '3级', en: '8 mph' };
-            const aqis = { zh: ['优', '良', '轻度污染'], en: ['Good', 'Moderate', 'Unhealthy'] };
-            
+            const temps = { sunny: 28, cloudy: 22, rainy: 18, snowy: -2, thunder: 20 };
             const data = weatherData[currentLang][randomWeather];
-            
-            document.getElementById('locationName').querySelector(`[data-lang="${currentLang}"]`).textContent = 
-                currentLang === 'zh' ? city + '市' : city;
-            document.getElementById('temperature').textContent = temps[currentLang][randomWeather] + (currentLang === 'zh' ? '°' : '°F');
-            document.getElementById('weatherDesc').querySelector(`[data-lang="${currentLang}"]`).textContent = data.desc;
-            document.getElementById('weatherIcon').textContent = data.icon;
-            document.getElementById('humidity').textContent = Math.floor(Math.random() * 40) + 30 + '%';
-            document.getElementById('windSpeed').querySelector(`[data-lang="${currentLang}"]`).textContent = winds[currentLang];
-            document.getElementById('aqi').querySelector(`[data-lang="${currentLang}"]`).textContent = 
-                aqis[currentLang][Math.floor(Math.random() * 3)];
-            
-            applyWeatherTheme(randomWeather);
+            const locationDisplay = currentLang === 'zh' ? city + '市' : city;
+            const tempDisplay = temps[randomWeather] + '°';
+            restoreLoadingState(locationDisplay, data.desc, tempDisplay, data.icon);
+            applyRealWeatherTheme(randomWeather, 0);
         }
 
         function getLocation() {
@@ -1075,23 +1833,7 @@
         }
 
         function applyWeatherTheme(weather) {
-            currentWeather = weather;
-            const data = weatherData[currentLang][weather];
-            
-            document.querySelectorAll('.weather-theme-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            r = data.r;
-            g = data.g;
-            b = data.b;
-            updateFromRGB();
-            
-            preview.classList.remove('sunny', 'cloudy', 'rainy', 'snowy', 'thunder');
-            preview.classList.add(weather);
-            
-            updateWeatherDisplay();
+            applyRealWeatherTheme(weather, 0);
         }
 
         function hsvToRgb(h, s, v) {
@@ -1153,50 +1895,36 @@
             document.getElementById('svCursor').style.left = (saturation / 100 * svBox.offsetWidth) + 'px';
             document.getElementById('svCursor').style.top = ((100 - value) / 100 * svBox.offsetHeight) + 'px';
             document.getElementById('svCursor').style.background = `rgb(${r},${g},${b})`;
-
             const hueSlider = document.getElementById('hueSlider');
             document.getElementById('hueThumb').style.left = (hue / 360 * hueSlider.offsetWidth) + 'px';
             document.getElementById('hueThumb').style.background = `hsl(${hue}, 100%, 50%)`;
-
-            const redTrack = document.getElementById('redTrack');
-            const greenTrack = document.getElementById('greenTrack');
-            const blueTrack = document.getElementById('blueTrack');
-            
-            document.getElementById('redThumb').style.left = (r / 255 * redTrack.offsetWidth) + 'px';
-            document.getElementById('greenThumb').style.left = (g / 255 * greenTrack.offsetWidth) + 'px';
-            document.getElementById('blueThumb').style.left = (b / 255 * blueTrack.offsetWidth) + 'px';
-
+            document.getElementById('redThumb').style.left = (r / 255 * document.getElementById('redTrack').offsetWidth) + 'px';
+            document.getElementById('greenThumb').style.left = (g / 255 * document.getElementById('greenTrack').offsetWidth) + 'px';
+            document.getElementById('blueThumb').style.left = (b / 255 * document.getElementById('blueTrack').offsetWidth) + 'px';
             document.getElementById('redValue').textContent = r;
             document.getElementById('greenValue').textContent = g;
             document.getElementById('blueValue').textContent = b;
-
             const hex = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
             document.getElementById('hexInput').value = hex;
             document.getElementById('rgbInput').value = `${r}, ${g}, ${b}`;
-
             updatePreviewStyle();
         }
 
         function updatePreviewStyle() {
             const fonts = currentLang === 'zh' ? zhFonts : enFonts;
             const fontData = fonts.find(f => f.id === currentFont) || fonts[0];
-            
             preview.className = `preview style-${currentStyle} ${currentWeather}`;
             preview.style.fontFamily = fontData.family;
             preview.style.fontSize = fontData.size;
             if (fontData.weight) preview.style.fontWeight = fontData.weight;
-            
             const color = `rgb(${r},${g},${b})`;
             preview.style.setProperty('--glass-color', color);
-
             const colors = {
                 realistic: `linear-gradient(135deg, ${color} 0%, rgb(${Math.max(0,r-50)},${Math.max(0,g-50)},${Math.max(0,b-50)}) 100%)`,
                 flat: color,
                 glass: `rgba(${r},${g},${b},0.15)`
             };
-            
             preview.style.background = colors[currentStyle];
-            
             if (currentStyle === 'glass') {
                 preview.style.boxShadow = `0 8px 32px rgba(${r},${g},${b},0.3), inset 0 0 30px rgba(255,255,255,0.2)`;
                 preview.style.border = '2px solid rgba(255,255,255,0.4)';
@@ -1215,20 +1943,15 @@
         function setupEventListeners() {
             let isDraggingSV = false;
             const svBox = document.getElementById('svBox');
-            
             svBox.addEventListener('mousedown', (e) => {
                 isDraggingSV = true;
                 updateSV(e);
                 e.preventDefault();
             });
-            
             document.addEventListener('mousemove', (e) => {
                 if (isDraggingSV) updateSV(e);
             });
-            
-            document.addEventListener('mouseup', () => {
-                isDraggingSV = false;
-            });
+            document.addEventListener('mouseup', () => isDraggingSV = false);
 
             function updateSV(e) {
                 const rect = svBox.getBoundingClientRect();
@@ -1241,20 +1964,15 @@
 
             let isDraggingHue = false;
             const hueSlider = document.getElementById('hueSlider');
-            
             hueSlider.addEventListener('mousedown', (e) => {
                 isDraggingHue = true;
                 updateHue(e);
                 e.preventDefault();
             });
-            
             document.addEventListener('mousemove', (e) => {
                 if (isDraggingHue) updateHue(e);
             });
-            
-            document.addEventListener('mouseup', () => {
-                isDraggingHue = false;
-            });
+            document.addEventListener('mouseup', () => isDraggingHue = false);
 
             function updateHue(e) {
                 const rect = hueSlider.getBoundingClientRect();
@@ -1273,20 +1991,15 @@
             rgbTracks.forEach(({ id, index }) => {
                 let isDragging = false;
                 const track = document.getElementById(id);
-                
                 track.addEventListener('mousedown', (e) => {
                     isDragging = true;
                     updateRGB(e, index);
                     e.preventDefault();
                 });
-                
                 document.addEventListener('mousemove', (e) => {
                     if (isDragging) updateRGB(e, index);
                 });
-                
-                document.addEventListener('mouseup', () => {
-                    isDragging = false;
-                });
+                document.addEventListener('mouseup', () => isDragging = false);
 
                 function updateRGB(e, idx) {
                     const rect = track.getBoundingClientRect();
@@ -1398,7 +2111,6 @@
             link.download = `${prefix}-${currentStyle}-${weatherName}-${Date.now()}.png`;
             link.href = canvas.toDataURL();
             
-            // ==================== 增加下载计数 ====================
             await incrementDownloadCount();
             
             link.click();
@@ -1408,3 +2120,4 @@
     </script>
 </body>
 </html>
+
